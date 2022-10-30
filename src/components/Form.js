@@ -1,7 +1,13 @@
+import memesData from "../memesData.js"
 
 function Form() {
 
-    
+    function getMemeImage() {
+        const memeArray = memesData.data.memes
+        const ranNum = Math.floor(Math.random() * memeArray.length)
+        const url = memeArray[ranNum].url
+        console.log(url)
+    }
 
     return (
         <div class="container">
