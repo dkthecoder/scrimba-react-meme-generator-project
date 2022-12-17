@@ -1,15 +1,28 @@
 import memesData from "../memesData.js"
+import React from "react"
 
 function Form() {
-
-    function getMemeImage() {
-        const memeArray = memesData.data.memes
-        const ranNum = Math.floor(Math.random() * memeArray.length)
-        const url = memeArray[ranNum].url
-        console.log(url)
+    const [meme, setMeme] = React.useState({
+        topText: "",
+        bottomText: "",
+        randomImage: "http://i.imgflip.com/1bij.jpg" 
+    })
+    const [allMemeImages, setAllMemeImages] = React.useState(memesData)
+    
+    
+     function getMemeImage() {
+        const memesArray = allMemeImages.data.memes
+        const randomNumber = Math.floor(Math.random() * memesArray.length)
+        const url = memesArray[randomNumber].url
+        setMeme(prevMeme => ({
+            ...prevMeme,
+            randomImage: url
+        }))
+        
     }
 
     return (
+        <main>
         <div class="container">
             <form class="needs-validation" novalidate>
                 <div class="row g-3">
@@ -24,9 +37,11 @@ function Form() {
                         <div class="invalid-feedback">Field is required.</div>
                     </div>
                 </div>
-                <button class="w-100 btn btn-primary btn-lg mt-3" type="submit">Continue to checkout</button>
+                <button class="w-100 btn btn-primary btn-lg mt-3" onClick={getMemeImage}>Get Meme</button>
             </form>
         </div>
+        <img src={meme.randomImage} alt="" class="center"/>
+        </main>
     );
 }
 
