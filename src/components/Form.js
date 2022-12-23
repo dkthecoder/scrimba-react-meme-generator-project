@@ -1,5 +1,6 @@
 import memesData from "../memesData.js"
 import React from "react"
+import './Form.css';
 
 function Form() {
     const [meme, setMeme] = React.useState({
@@ -21,26 +22,34 @@ function Form() {
         
     }
 
+    function handleChange(event) {
+        const {name, value} = event.target
+        setMeme(prevMeme => ({
+            ...prevMeme,
+            [name]: value
+        }))
+    }
+
     return (
         <main>
         <div class="container">
             <form class="needs-validation" novalidate>
                 <div class="row g-3">
                     <div class="col-sm-6">
-                        <label for="firstName" class="form-label">Top Text</label>
-                        <input type="text" class="form-control" id="firstName" placeholder="" value="" required></input>
-                        <div class="invalid-feedback">Field is required.</div>
+                        <input type="text" className="form-control" name="topText" value={meme.topText} onChange={handleChange} placeholder="Top Text"></input>
                     </div>
                     <div class="col-sm-6">
-                        <label for="lastName" class="form-label">Bottom Text</label>
-                        <input type="text" class="form-control" id="lastName" placeholder="" value="" required></input>
-                        <div class="invalid-feedback">Field is required.</div>
+                        <input type="text" className="form-control" name="bottomText" value={meme.bottomText} onChange={handleChange} placeholder="Bottom Text"></input>
                     </div>
                 </div>
                 <button class="w-100 btn btn-primary btn-lg mt-3" onClick={getMemeImage}>Get Meme</button>
             </form>
         </div>
-        <img src={meme.randomImage} alt="" class="center"/>
+        <div className="meme">
+                <img src={meme.randomImage} className="meme--image" />
+                <h2 className="meme--text top">{meme.topText}</h2>
+                <h2 className="meme--text bottom">{meme.bottomText}</h2>
+            </div>
         </main>
     );
 }
